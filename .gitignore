@@ -5,6 +5,9 @@
 # 僅允許已加密（密碼鎖）的版本上傳
 !*-密碼鎖.html
 
+# GitHub Pages 入口：純轉址頁，不含任何行程內容
+!index.html
+
 # 常見暫存／系統檔
 .DS_Store
 Thumbs.db
