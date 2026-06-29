@@ -9,6 +9,11 @@
 # build.mjs 用的本地建置資產（不含行程明文，但屬建置輸入，保留本地）
 support.js
 
+# 密碼放這裡（本地、絕不上傳）；只放行不含真密碼的範本 .env.example
+.env
+.env.*
+!.env.example
+
 # 發布到 GitHub Pages 的檔（皆不含行程明文）：
 #   - index.html：線上版（已加密、字型走 CDN、約 140KB），由 build.mjs 從 .dc.html 產生
 #   - 北海道隨身手冊-離線版-密碼鎖.html：舊網址相容用的純轉址頁，導向 index.html

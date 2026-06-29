@@ -5,7 +5,7 @@
 
 - Repo: https://github.com/David119-Chen/2026summer
 - Pages: https://david119-chen.github.io/2026summer/
-- 線上版密碼：**不寫在此**。建置時由環境變數 `HANDBOOK_PW` 提供。
+- 線上版密碼：**不寫在此**。放在本地 `.env`（`HANDBOOK_PW`，已被 gitignore 擋下），build.mjs 會自動讀取。
 
 ## 一份可讀母片 → 兩份輸出
 
@@ -40,11 +40,12 @@
 
 1. 在 Claude design 改內容 → 匯出新的「網頁版」，覆蓋本地 `北海道隨身手冊-網頁版.dc.html`。
    （若 Claude 升級了 runtime，可能要重抽 `support.js`/`shell.html`：從加密封存檔解密取得。）
-2. 設定密碼並重建兩份輸出：
+2. 重建兩份輸出（密碼放在本地 `.env`，build 會自動讀）：
    ```powershell
-   $env:HANDBOOK_PW='（密碼）'; node build.mjs
+   node build.mjs
    ```
-   - bash: `HANDBOOK_PW='（密碼）' node build.mjs`
+   - 首次使用：`cp .env.example .env`，把 `HANDBOOK_PW` 填成真密碼。
+   - 臨時覆蓋：`$env:HANDBOOK_PW='（密碼）'; node build.mjs`（bash: `HANDBOOK_PW='（密碼）' node build.mjs`）
 3. 發布線上版：`git add index.html && git commit && git push`。
 4. 離線版備案：把產生的 `北海道隨身手冊-離線版.html` 複製到手機（不會、也不該進版控）。
 
@@ -52,6 +53,6 @@
 
 - **預設忽略所有 `*.html`**，只白名單放行兩個「不含行程明文」的檔：`index.html`（密文）與轉址頁。
 - `support.js` 也忽略（屬建置輸入）。含明文的檔（`.dc.html`、離線版）一律本地，**絕不可推上 GitHub**。
-- 密碼只走 `HANDBOOK_PW` 環境變數，**不可寫進任何 commit、CLAUDE.md、build.mjs**。
+- 密碼存在本地 `.env`（`HANDBOOK_PW=...`，已被 gitignore 擋下；只放行不含真密碼的範本 `.env.example`）；build.mjs 自動讀取，也可用環境變數臨時覆蓋。**密碼不可寫進任何 commit、CLAUDE.md、build.mjs**。
 - `.vendor-cache/`（建置時抓的 React/Babel）與 `.claude/launch.json`（預覽用）皆已忽略。
 - 改 gitignore 或新增檔案後，務必 `git check-ignore` 確認 `.dc.html`／離線版仍被擋下再 commit。

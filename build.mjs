@@ -9,13 +9,17 @@
 //   輸出②（本地）：北海道隨身手冊-離線版.html  ← 離線版：不加密、系統字、內嵌 React+ReactDOM+Babel，
 //                                              真正可離線開（~3MB），手動傳手機當備案
 //
-// 密碼從環境變數讀取（只用於「加密線上版輸出」），不寫進任何檔案：
-//   PowerShell:  $env:HANDBOOK_PW='你的密碼'; node build.mjs
-//   bash:        HANDBOOK_PW='你的密碼' node build.mjs
+// 密碼（HANDBOOK_PW）只用於「加密線上版輸出」，不寫進任何已提交的檔案。
+// 取得順序：① 既有環境變數優先 ② 否則讀本地 .env（已被 gitignore 擋下）。
+//   平常：把密碼放進 .env（內容：HANDBOOK_PW=...，可參考 .env.example），然後直接 `node build.mjs`
+//   臨時覆蓋：PowerShell `$env:HANDBOOK_PW='...'; node build.mjs`／bash `HANDBOOK_PW='...' node build.mjs`
 import fs from 'fs';
 import zlib from 'zlib';
 import path from 'path';
 import crypto from 'crypto';
+
+// 載入本地 .env（Node 20.12+ 內建，免裝套件）；已存在的環境變數優先，不被覆蓋
+if (!process.env.HANDBOOK_PW && fs.existsSync('.env')) process.loadEnvFile('.env');
 
 const DC = '北海道隨身手冊-網頁版.dc.html';   // 內容母片
 const SUPPORT = 'support.js';                  // dc-runtime 引擎
@@ -24,7 +28,7 @@ const ONLINE_OUT = 'index.html';
 const OFFLINE_OUT = '北海道隨身手冊-離線版.html';
 const CACHE = '.vendor-cache';
 const PW = process.env.HANDBOOK_PW;
-if (!PW) { console.error('請先設定環境變數 HANDBOOK_PW（解鎖密碼，用於加密線上版）'); process.exit(1); }
+if (!PW) { console.error('找不到密碼。請在 .env 設定 HANDBOOK_PW=...（可參考 .env.example），或用環境變數提供。'); process.exit(1); }
 for (const f of [DC, SUPPORT, SHELL]) if (!fs.existsSync(f)) { console.error('缺少建置來源：' + f); process.exit(1); }
 
 const NUL = String.fromCharCode(0);
