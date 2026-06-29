@@ -1,6 +1,6 @@
 // 一份母片 → 兩份輸出。
 //
-//   來源（本地）：北海道隨身手冊-離線版-密碼鎖.html  ← Claude 匯出的加密母片，含全部字型
+//   來源（本地）：北海道隨身手冊-母片-密碼鎖.html  ← Claude 匯出的加密母片，含全部字型
 //   輸出①（發布）：index.html                       ← 線上版：AES 加密 + 字型走 Google CDN，~140KB
 //                                                      （React/Babel 執行時由 unpkg 載入，線上會快取）
 //   輸出②（本地）：北海道隨身手冊-離線版.html          ← 離線版：不加密、系統字、內嵌 React+ReactDOM+Babel，
@@ -13,7 +13,7 @@ import fs from 'fs';
 import zlib from 'zlib';
 import path from 'path';
 
-const SRC = '北海道隨身手冊-離線版-密碼鎖.html';
+const SRC = '北海道隨身手冊-母片-密碼鎖.html';
 const ONLINE_OUT = 'index.html';
 const OFFLINE_OUT = '北海道隨身手冊-離線版.html';
 const CACHE = '.vendor-cache';
