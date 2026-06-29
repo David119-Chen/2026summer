@@ -55,7 +55,3 @@
 - 密碼只走 `HANDBOOK_PW` 環境變數，**不可寫進任何 commit、CLAUDE.md、build.mjs**。
 - `.vendor-cache/`（建置時抓的 React/Babel）與 `.claude/launch.json`（預覽用）皆已忽略。
 - 改 gitignore 或新增檔案後，務必 `git check-ignore` 確認 `.dc.html`／離線版仍被擋下再 commit。
-
-## 已知待辦（選擇性）
-
-- git 歷史中仍留有早期 commit 的 18MB 加密檔（密文、安全，但會讓 clone 變大）。若要徹底移除需 `git filter-repo` 重寫歷史並 force push（破壞性，未執行）。
